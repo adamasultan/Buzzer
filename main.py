@@ -22,13 +22,16 @@ class Main():
         #player_id = [k for k,v in players.items() if v[1] == button][0]
         for team in self.teams:
             if team.has_button(button):
-                self.set_winner(team)
+                #print(team.get_player(button).number)
+                self.set_winner(team.get_player(button),team)
         
-    def set_winner(self,team):
+    def set_winner(self,player,team):
         if self.winning_team != None:
             return
         self.winning_team = team
-        print(f"Winner is Team {team.team_number}")
+        self.winning_player = player
+        print(f"Winner is Team {team.team_number}: player:{player.number}")
+        
         #winner_light()
 
     def winner_light(self):
@@ -49,6 +52,7 @@ class Main():
                 player.color_pin.off()
                 #print("light off")
         self.winning_team = None
+        self.winning_player = None
         
     #self.register_buttons()
 
@@ -63,8 +67,10 @@ team1 = Team(1)
 team2 = Team(2)
 player1 = Player(1, Pin(19, Pin.IN, Pin.PULL_DOWN), Pin(2,Pin.OUT))
 player2 = Player(2, Pin(23, Pin.IN, Pin.PULL_DOWN), Pin(16,Pin.OUT))
+player3 = Player(3, Pin(17, Pin.IN, Pin.PULL_DOWN), Pin(16,Pin.OUT))
 team1.players.append(player1)
 team2.players.append(player2)
+team2.players.append(player3)
 game = Main([team1,team2])
 game.register_buttons()
 game.game_loop()

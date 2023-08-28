@@ -7,4 +7,7 @@ class Team:
         for player in self.players:
             if button == player.button_pin:
                 return True
-        
+    def get_player(self, button):
+        for player in self.players:
+            if button == player.button_pin:
+                return player
