@@ -10,6 +10,7 @@ class Dashboard:
     self.__leds=leds
     self.__pixels = NeoPixel(Pin(self.DATA_PIN), self.LED_COUNT)
     self.__color = color
+    self.reset()
 
   def add_leds(self, arr):
     self.__leds += arr
@@ -21,9 +22,28 @@ class Dashboard:
     (30 , 97 , 0),(18 , 109 , 0),(6 , 121 , 0),(0 , 122 , 5),(0 , 110 , 17),(0 , 98 , 29),(0 , 86 , 41),(0 , 74 , 53),
     (0 , 62 , 65),(0 , 50 , 77),(0 , 38 , 89),(0 , 26 , 101),(0 , 14 , 113),(0 , 2 , 125),(9 , 0 , 118),(21 , 0 , 106),
     (33 , 0 , 94),(45 , 0 , 82),(57 , 0 , 70),(69 , 0 , 58),(81 , 0 , 46),(93 , 0 , 34),(105 , 0 , 22),(117 , 0 , 10)]
-    
+
     for index in self.__leds:
       self.__pixels[index] = self.__color
+    self.__pixels.write()
+
+    print("before")
+    sleep(2)
+    print("after")
+
+    count = 30
+    while count >0 :
+      rainbow = rainbow[-1:] + rainbow[:-1]
+      for index in self.__leds:
+        self.__pixels[index] = rainbow[index]
+      self.__pixels.write()
+      sleep(0.1)
+      count = count - 1
+
+  def reset(self):
+    reset_color = (0,0,0)
+    for index in self.__leds:
+      self.__pixels[index] = reset_color
     self.__pixels.write()
 
   def neotest(self):

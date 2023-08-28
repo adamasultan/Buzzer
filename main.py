@@ -6,6 +6,7 @@ from dashboard import Dashboard
 
 class Main():
     def __init__(self, teams):
+        self.winning_team = None
         self.teams = teams
         self.game_reset()
 #     r = Pin(2,Pin.OUT)
@@ -55,9 +56,10 @@ class Main():
             for player in team.players:
                 player.color_pin.off()
                 #print("light off")
+        if self.winning_team != None:
+            self.winning_team.reset_dashboard()
         self.winning_team = None
         self.winning_player = None
-        Dashboard([x for x in range(16)], (0,0,0)).win()
         
     #self.register_buttons()
 
@@ -66,7 +68,6 @@ class Main():
         while True:
             if self.winning_team != None:
                 self.winner_light()
-                time.sleep(5)
                 self.game_reset()
 
 team1 = Team(1, [x for x in range(8)], (255,0,0))

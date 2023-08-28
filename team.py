@@ -17,3 +17,6 @@ class Team:
     
     def display_win(self):
         self.__dashboard.win()
+
+    def reset_dashboard(self):
+        self.__dashboard.reset()
