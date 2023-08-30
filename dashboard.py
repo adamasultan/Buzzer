@@ -5,7 +5,7 @@ from machine import Pin
 
 class Dashboard:
   def __init__(self, leds, color):
-    self.DATA_PIN = 12
+    self.DATA_PIN = 32
     self.LED_COUNT = 16
     self.__leds=leds
     self.__pixels = NeoPixel(Pin(self.DATA_PIN), self.LED_COUNT)
