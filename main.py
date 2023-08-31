@@ -1,22 +1,25 @@
 from machine import Pin
 import time
+from time import sleep
 from player import Player
 from team import Team
 from dashboard import Dashboard
 
-T1P1_BUTTON_PIN = 13
-T1P2_BUTTON_PIN = 12
-T1P3_BUTTON_PIN = 14
-T1P1_LED_PIN = 26
-T1P2_LED_PIN = 25
-T1P3_LED_PIN = 33
+T1P1_BUTTON_PIN = 19
+T1P2_BUTTON_PIN = 15
+T1P3_BUTTON_PIN = 2
+T1P1_LED_PIN = 27
+T1P2_LED_PIN = 27
+T1P3_LED_PIN = 27
 
-T2P1_BUTTON_PIN = 5
-T2P2_BUTTON_PIN = 18
-T3P3_BUTTON_PIN = 19
-T2P1_LED_PIN = 15
-T2P2_LED_PIN = 2
-T2P3_LED_PIN = 4
+T2P1_BUTTON_PIN = 9
+T2P2_BUTTON_PIN = 22
+T2P3_BUTTON_PIN = 32
+T2P1_LED_PIN = 33
+T2P2_LED_PIN = 33
+T2P3_LED_PIN = 33
+
+
 
 class Main():
     def __init__(self, teams):
@@ -27,7 +30,7 @@ class Main():
     def on_button_press(self,button):
         for team in self.teams:
             if team.has_button(button):
-                #print(team.get_player(button).number)
+                print(team.get_player(button).number)
                 self.set_winner(team.get_player(button),team)
         
     def set_winner(self,player,team):
@@ -60,26 +63,49 @@ class Main():
         self.winning_player = None
 
     def game_loop(self):
-        print("here")
+        print("Starting game loop")
         while True:
+            #print('.', end=" ")
+            #sleep(0.1)
             if self.winning_team != None:
+                print('')
                 self.winner_light()
                 self.game_reset()
 
+def register_players_for_team(team, team_config):
+    for player_config in team_config:
+        register_player(team, player_config[0], player_config[1], player_config[2])
 
+
+def register_player(team, player_number, button_pin, led_pin):
+        player = Player(player_number, Pin(button_pin, Pin.IN, Pin.PULL_UP), Pin(led_pin,Pin.OUT))
+        team.players.append(player)
+        print(f'Player {player_number} on team {team.team_number}: Button: {button_pin}, LED: {led_pin}')    
+
+def init_config():
+    team1_config = []
+    team1_config.append([1, T1P1_BUTTON_PIN,T1P1_LED_PIN])
+    team1_config.append([2, T1P2_BUTTON_PIN,T1P2_LED_PIN])
+    team1_config.append([3, T1P3_BUTTON_PIN,T1P3_LED_PIN])
+    #print(f'Configured {len(team1_config)} players for team 1')
+
+    team2_config = []
+    team2_config.append([1, T2P1_BUTTON_PIN,T2P1_LED_PIN])
+    team2_config.append([2, T2P2_BUTTON_PIN,T2P2_LED_PIN])
+    team2_config.append([3, T2P3_BUTTON_PIN,T2P3_LED_PIN])
+    #print(f'Configured {len(team2_config)} players for team 2')
+
+    return team1_config, team2_config
 
 team1 = Team(1, [x for x in range(8)], (255,0,0))
 team2 = Team(2, [x for x in range(8,16)], (0,0,255))
-player1 = Player(1, Pin(T1P1_BUTTON_PIN, Pin.IN, Pin.PULL_DOWN), Pin(T1P1_LED_PIN,Pin.OUT))
 
-player2 = Player(2, Pin(T2P1_BUTTON_PIN, Pin.IN, Pin.PULL_DOWN), Pin(T2P1_LED_PIN,Pin.OUT))
-player3 = Player(3, Pin(T2P2_BUTTON_PIN, Pin.IN, Pin.PULL_DOWN), Pin(T2P2_LED_PIN,Pin.OUT))
+team1_config, team2_config = init_config()
+register_players_for_team(team1, team1_config)
+#register_players_for_team(team2, team2_config)
 
-team1.players.append(player1)
-team2.players.append(player2)
-team2.players.append(player3)
+
 game = Main([team1,team2])
-
 game.register_buttons()
 game.game_loop()
 #print(game.teams[1].players[0].number)
