@@ -4,6 +4,7 @@ from time import sleep
 from player import Player
 from team import Team
 from dashboard import Dashboard
+from buzzer import Buzzer
 
 T1P1_BUTTON_PIN = 13 #works
 T1P2_BUTTON_PIN = 14 #works
@@ -22,7 +23,8 @@ T2P3_LED_PIN = 18 #works
 
 
 class Main():
-    def __init__(self, teams):
+    def __init__(self, teams, buzzer):
+        self.buzzer = Buzzer()
         self.winning_team = None
         self.teams = teams
         self.game_reset()
