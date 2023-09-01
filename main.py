@@ -118,6 +118,8 @@ def wait_for_start(team1, team2):
     print('clear lights')
     pixels.fill((0,0,0))
     pixels.write()
+    time.sleep(0.05)
+    pixels.write()
     print('waiting for start')
     while True:
         for team in [team1,team2]:
@@ -126,6 +128,8 @@ def wait_for_start(team1, team2):
                     return
 def start_lights():
     pixels.fill((0,255,0))
+    pixels.write()
+    time.sleep(0.05)
     pixels.write()
     time.sleep(1)
 
