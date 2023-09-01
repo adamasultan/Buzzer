@@ -45,7 +45,7 @@ class Dashboard:
     while count >0 :
       rainbow = rainbow[-1:] + rainbow[:-1]
       for index in self.__leds:
-        self.__pixels[index] = rainbow[index]
+        self.__pixels[index] = tuple(element // 5 for element in rainbow[index])
       self.__pixels.write()
       sleep(0.1)
       count = count - 1
