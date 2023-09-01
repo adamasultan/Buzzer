@@ -23,11 +23,12 @@ T2P3_LED_PIN = 18 #works
 
 
 class Main():
-    def __init__(self, teams, buzzer):
+    def __init__(self, teams):
         self.buzzer = Buzzer()
         self.winning_team = None
         self.teams = teams
         self.game_reset()
+        self.buzzer = Buzzer()
 
     def on_button_press(self,button):
         for team in self.teams:
