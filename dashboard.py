@@ -19,7 +19,8 @@ class Dashboard:
     self.__pixels.write()
     
   def set_white(self):
-    self.__pixels.fill((75,75,75))
+    print('set white')
+    self.__pixels.fill((30,30,30))
     self.__pixels.write()
     sleep(0.05)
     self.__pixels.write()

@@ -127,7 +127,7 @@ def wait_for_start(team1, team2):
                 if player.button_pin.value():
                     return
 def start_lights():
-    pixels.fill((0,255,0))
+    pixels.fill((0,30,0))
     pixels.write()
     time.sleep(0.05)
     pixels.write()
@@ -135,8 +135,8 @@ def start_lights():
 
 print(f'Neopixel on pin {PIXEL_DATA_PIN}.')
 pixels = NeoPixel(Pin(PIXEL_DATA_PIN), PIXEL_LED_COUNT)
-team1 = Team(1, [x for x in range(int(PIXEL_LED_COUNT/2))], (0,0,255), pixels)
-team2 = Team(2, [x for x in range(int(PIXEL_LED_COUNT/2),PIXEL_LED_COUNT)], (127,127,0), pixels)
+team1 = Team(1, [x for x in range(int(PIXEL_LED_COUNT/2))], (0,0,30), pixels)
+team2 = Team(2, [x for x in range(int(PIXEL_LED_COUNT/2),PIXEL_LED_COUNT)], (30,30,0), pixels)
 
 start_lights()
 print('Initializing teams')
