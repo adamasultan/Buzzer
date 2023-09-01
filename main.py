@@ -5,6 +5,7 @@ from player import Player
 from team import Team
 from dashboard import Dashboard
 from buzzer import Buzzer
+from neopixel import NeoPixel
 
 T1P1_BUTTON_PIN = 13 #works
 T1P2_BUTTON_PIN = 14 #works
@@ -20,6 +21,10 @@ T2P1_LED_PIN = 19 #works
 T2P2_LED_PIN = 22 #works
 T2P3_LED_PIN = 18 #works
 
+PIXEL_DATA_PIN = 12
+PIXEL_LED_COUNT = 16
+
+
 
 
 class Main():
@@ -27,7 +32,7 @@ class Main():
         self.buzzer = Buzzer()
         self.winning_team = None
         self.teams = teams
-        self.game_reset()
+        #self.game_reset()
 
     def on_button_press(self,button):
         for team in self.teams:
@@ -59,8 +64,9 @@ class Main():
             for player in team.players:
                 player.color_pin.off()
                 #print("light off")
-        if self.winning_team != None:
-            self.winning_team.reset_dashboard()
+        
+        for team in self.teams:
+            team.reset_dashboard()
         self.winning_team = None
         self.winning_player = None
 
@@ -98,9 +104,10 @@ def init_config():
     print(f'Configured {len(team2_config)} players for team 2')
 
     return team1_config, team2_config
-
-team1 = Team(1, [x for x in range(8)], (0,0,255))
-team2 = Team(2, [x for x in range(8,16)], (127,127,0))
+print(f'Neopixel on pin {PIXEL_DATA_PIN}.')
+pixels = NeoPixel(Pin(PIXEL_DATA_PIN), PIXEL_LED_COUNT)
+team1 = Team(1, [x for x in range(int(PIXEL_LED_COUNT/2))], (0,0,255), pixels)
+team2 = Team(2, [x for x in range(int(PIXEL_LED_COUNT/2),PIXEL_LED_COUNT)], (127,127,0), pixels)
 
 print('Initializing teams')
 team1_config, team2_config = init_config()
