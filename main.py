@@ -88,7 +88,7 @@ class Main():
                 print('')
                 self.winner_light()
                 self.game_reset()
-
+                
 def register_players_for_team(team, team_config):
     for player_config in team_config:
         register_player(team, player_config[0], player_config[1], player_config[2])
@@ -113,17 +113,33 @@ def init_config():
     print(f'Configured {len(team2_config)} players for team 2')
 
     return team1_config, team2_config
+
+def wait_for_start(team1, team2):
+    print('clear lights')
+    pixels.fill((0,0,0))
+    pixels.write()
+    print('waiting for start')
+    while True:
+        for team in [team1,team2]:
+            for player in team.players:
+                if player.button_pin.value():
+                    return
+def start_lights():
+    pixels.fill((0,255,0))
+    pixels.write()
+    time.sleep(1)
+
 print(f'Neopixel on pin {PIXEL_DATA_PIN}.')
 pixels = NeoPixel(Pin(PIXEL_DATA_PIN), PIXEL_LED_COUNT)
 team1 = Team(1, [x for x in range(int(PIXEL_LED_COUNT/2))], (0,0,255), pixels)
 team2 = Team(2, [x for x in range(int(PIXEL_LED_COUNT/2),PIXEL_LED_COUNT)], (127,127,0), pixels)
 
+start_lights()
 print('Initializing teams')
 team1_config, team2_config = init_config()
 register_players_for_team(team1, team1_config)
 register_players_for_team(team2, team2_config)
-
-
+wait_for_start(team1,team2)
 game = Main([team1,team2])
 game.start_boot_up()
 game.buzzer.play_jeopardy_song()
