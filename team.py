@@ -1,10 +1,10 @@
 from dashboard import Dashboard
 
 class Team:
-    def __init__(self, team_number, leds, color):
+    def __init__(self, team_number, leds, color, pixels):
         self.players = []
         self.team_number = team_number
-        self.__dashboard = Dashboard(leds, color)
+        self.__dashboard = Dashboard(leds, color, pixels)
         
     def has_button(self,button):
         for player in self.players:
