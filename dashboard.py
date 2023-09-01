@@ -6,6 +6,7 @@ from machine import Pin
 class Dashboard:
   def __init__(self, leds, color):
     self.DATA_PIN = 12
+    print(f'Neopixel on pin {self.DATA_PIN}.')
     self.LED_COUNT = 16
     self.__leds=leds
     self.__pixels = NeoPixel(Pin(self.DATA_PIN), self.LED_COUNT)
@@ -27,9 +28,9 @@ class Dashboard:
       self.__pixels[index] = self.__color
     self.__pixels.write()
 
-    print("before")
+    #print("before")
     sleep(2)
-    print("after")
+    #print("after")
 
     count = 30
     while count >0 :

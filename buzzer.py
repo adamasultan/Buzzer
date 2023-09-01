@@ -3,9 +3,8 @@ from machine import Pin
 from machine import PWM
 
 class Buzzer():
-  def __init__(self, song = 0):
-    self.song = song
-    self.buzzer = PWM(Pin(1, Pin.IN))
+  def __init__(self):
+    self.buzzer = PWM(Pin(32, Pin.OUT))
     self.set_notes()
 
   def set_notes(self):
@@ -129,5 +128,5 @@ class Buzzer():
     time.sleep(0.5)
     self.buzzer.duty_u16(0)
 
-buzzer = Buzzer()
-buzzer.play_jeopardy_song()
+#buzzer = Buzzer()
+#buzzer.play_jeopardy_song()
