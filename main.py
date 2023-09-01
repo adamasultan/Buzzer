@@ -28,7 +28,6 @@ class Main():
         self.winning_team = None
         self.teams = teams
         self.game_reset()
-        self.buzzer = Buzzer()
 
     def on_button_press(self,button):
         for team in self.teams:
@@ -112,6 +111,7 @@ register_players_for_team(team2, team2_config)
 game = Main([team1,team2])
 game.register_buttons()
 game.buzzer.play_jeopardy_song()
+print('played song')
 game.game_loop()
-#print(game.teams[1].players[0].number)
+
 
