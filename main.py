@@ -58,6 +58,15 @@ class Main():
                 player.button_pin.irq(trigger=Pin.IRQ_RISING, handler=self.on_button_press)
         print("Buttons registered")
         
+    def start_boot_up(self):
+        for team in self.teams:
+            team.reset_dashboard()
+            for player in team.players:
+                player.color_pin.on()
+    def end_boot_up(self):
+        for team in self.teams:
+            for player in team.players:
+                player.color_pin.off()
     def game_reset(self):
         print("game_reset")
         for team in self.teams:
@@ -116,9 +125,12 @@ register_players_for_team(team2, team2_config)
 
 
 game = Main([team1,team2])
+game.start_boot_up()
 game.buzzer.play_jeopardy_song()
 game.register_buttons()
+game.end_boot_up()
 print('played song')
+game.game_reset()
 game.game_loop()
 
 

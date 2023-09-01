@@ -8,7 +8,7 @@ class Dashboard:
     self.__leds=leds
     self.__pixels = pixels
     self.__color = color
-    self.reset()
+    #self.reset()
 
   def add_leds(self, arr):
     self.__leds += arr
