@@ -109,8 +109,8 @@ register_players_for_team(team2, team2_config)
 
 
 game = Main([team1,team2])
-game.register_buttons()
 game.buzzer.play_jeopardy_song()
+game.register_buttons()
 print('played song')
 game.game_loop()
 
