@@ -99,8 +99,8 @@ def init_config():
 
     return team1_config, team2_config
 
-team1 = Team(1, [x for x in range(8)], (255,0,0))
-team2 = Team(2, [x for x in range(8,16)], (0,0,255))
+team1 = Team(1, [x for x in range(8)], (0,0,255))
+team2 = Team(2, [x for x in range(8,16)], (127,127,0))
 
 print('Initializing teams')
 team1_config, team2_config = init_config()
