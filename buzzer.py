@@ -4,7 +4,7 @@ from machine import PWM
 
 class Buzzer():
   def __init__(self):
-    self.buzzer = PWM(Pin(32, Pin.OUT))
+    self.buzzer = PWM(Pin(13, Pin.OUT))
     self.set_notes()
 
   def set_notes(self):
